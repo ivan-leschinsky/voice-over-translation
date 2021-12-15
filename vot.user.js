@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name             voice-over-translation
 // @match            *://*.youtube.com/*
-// @version          1.5
+// @version          1.6
 // @require          https://code.jquery.com/jquery-3.6.0.min.js
 // @resource         styles https://raw.githubusercontent.com/sodapng/voice-over-translation/master/styles.css
 // @grant            GM_getResourceText
@@ -18,7 +18,8 @@ const styles = GM_getResourceText("styles");
 GM_addStyle(styles);
 
 const fragment = new DocumentFragment();
-const span = $("<span>");
+const defaultStyles = "cursor: pointer;position: static;left: auto; opacity: initial;"
+const span = $("<span style='" + defaultStyles + "'>");
 
 $(span).addClass("translation-btn");
 
@@ -80,37 +81,15 @@ const removeClassBtnErrorAndBtnSucces = () => {
 
 $("body").on("yt-page-data-updated", function () {
   var video = $("video")[0];
-  $(".html5-video-container").append(fragment);
-
-  let btnHover = function () {
-    let time;
-
-    $(".html5-video-container").on("mousemove", resetTimer);
-    $(".html5-video-container").on("mouseout", () => logout(0));
-    $(span).on("mousemove", function (event) {
-      clearTimeout(time);
-      logout(1);
-      event.stopPropagation();
-    });
-
-    function logout(n) {
-      $(span).css("opacity", n);
-    }
-
-    function resetTimer() {
-      clearTimeout(time);
-      logout(1);
-      time = setTimeout(() => logout(0), 2000);
-    }
-  };
-
-  btnHover();
-
+  console.log("started with audio over video");
+  // $(".html5-video-container").append(fragment);
+  $(".ytp-left-controls").append(fragment);
   removeClassBtnErrorAndBtnSucces();
 
   const lipSync = (mode = false) => {
     audio.currentTime = video.currentTime;
     audio.playbackRate = video.playbackRate;
+    // audio.volume = video.volume
 
     if (!mode) {
       return;
@@ -138,7 +117,7 @@ $("body").on("yt-page-data-updated", function () {
   $(span).click(async function (event) {
     try {
       event.stopPropagation();
-
+      
       const VIDEO_ID = getVeideoId();
 
       if (!VIDEO_ID) {
@@ -146,6 +125,7 @@ $("body").on("yt-page-data-updated", function () {
       }
 
       const rawResponse = await getUrlAudio(VIDEO_ID);
+      console.log("response: ",rawResponse)
 
       const URL_AUDIO = rawResponse.match(/https.*[a-z0-9]{64}|https.*mp3/);
 

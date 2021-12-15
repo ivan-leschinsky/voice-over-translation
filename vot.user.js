@@ -3,12 +3,12 @@
 // @match            *://*.youtube.com/*
 // @version          1.6
 // @require          https://code.jquery.com/jquery-3.6.0.min.js
-// @resource         styles https://raw.githubusercontent.com/sodapng/voice-over-translation/master/styles.css
+// @resource         styles https://github.com/ivan-leschinsky/voice-over-translation/raw/master/styles.css
 // @grant            GM_getResourceText
 // @grant            GM_addStyle
 // @grant            GM_xmlhttpRequest
-// @updateURL        https://raw.githubusercontent.com/sodapng/voice-over-translation/master/vot.user.js
-// @downloadURL      https://raw.githubusercontent.com/sodapng/voice-over-translation/master/vot.user.js
+// @updateURL        https://github.com/ivan-leschinsky/voice-over-translation/raw/master/vot.user.js
+// @downloadURL      https://github.com/ivan-leschinsky/voice-over-translation/raw/master/vot.user.js
 // @supportURL       https://github.com/sodapng/voice-over-translation/issues
 // @homepageURL      https://github.com/sodapng/voice-over-translation
 // @connect          api.browser.yandex.ru
